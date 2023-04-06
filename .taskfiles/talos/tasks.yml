@@ -1,0 +1,20 @@
+---
+version: '3'
+
+tasks:
+  genconfig:
+    desc: regenerate talos cluster configuration
+    cmds:
+      - talhelper genconfig -c {{.TALOS_DIR}}/talconfig.yaml -e {{.TALOS_DIR}}/talenv.sops.yaml -s {{.TALOS_DIR}}/talsecret.sops.yaml -o {{.TALOS_DIR}}/clusterconfig
+
+  apply:
+    desc: apply machine configuration changes to the talos cluster
+    cmds:
+      - talosctl apply-config -f {{.TALOS_DIR}}/clusterconfig/kochhaus-talos1.yaml -n 192.168.20.200
+      - talosctl apply-config -f {{.TALOS_DIR}}/clusterconfig/kochhaus-talos2.yaml -n 192.168.20.201
+      - talosctl apply-config -f {{.TALOS_DIR}}/clusterconfig/kochhaus-talos3.yaml -n 192.168.20.202
+
+  kubeconfig:
+    desc: fetch the talos cluster kubeconfig
+    cmds:
+      - talosctl kubeconfig {{.KUBECONFIG}} -f -n 192.168.20.200

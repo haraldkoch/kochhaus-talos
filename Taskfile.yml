@@ -1,0 +1,19 @@
+---
+version: "3"
+
+vars:
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  TERRAFORM_DIR: "{{.ROOT_DIR}}/infrastructure/terraform"
+  TALOS_DIR: "{{.ROOT_DIR}}/infrastructure/talos"
+
+dotenv: [".config.env"]
+
+env:
+  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
+  SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
+
+includes:
+  cluster: .taskfiles/ClusterTasks.yml
+  precommit: .taskfiles/PrecommitTasks.yml
+  talos: .taskfiles/talos/tasks.yml
+  terraform: .taskfiles/TerraformTasks.yml

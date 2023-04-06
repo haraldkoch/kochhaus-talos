@@ -1,0 +1,18 @@
+---
+# Source: tigera-operator/templates/crs/custom-resources.yaml
+apiVersion: operator.tigera.io/v1
+kind: Installation
+metadata:
+  name: default
+spec:
+  calicoNetwork:
+    ipPools:
+      - blockSize: 26
+        cidr: 10.106.0.0/20
+        encapsulation: VXLANCrossSubnet
+        natOutgoing: Enabled
+        nodeSelector: all()
+  imagePullSecrets: []
+  kubernetesProvider: ""
+  nodeMetricsPort: 9091
+  typhaMetricsPort: 9093
